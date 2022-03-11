@@ -4,7 +4,7 @@
 #include <string>
 #include <chrono>
 
-void bubbleSort (std::vector<unsigned int> &vec)
+std::chrono::microseconds bubbleSort (std::vector<unsigned int> &vec)
 {
     /*Get Start Time*/
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -26,11 +26,11 @@ void bubbleSort (std::vector<unsigned int> &vec)
 
     /*Get and Print Duration*/
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Vector was sorted in" << duration.count() << " microseconds.\n";
+    std::cout << "Bubble sort took " << duration.count() << " microseconds.\n";
 
 }
 
-void selectionSort (std::vector<unsigned int> &vec)
+std::chrono::microseconds selectionSort (std::vector<unsigned int> &vec)
 {
 
     /*Get Start Time*/
@@ -56,10 +56,10 @@ void selectionSort (std::vector<unsigned int> &vec)
 
     /*Get and Print Duration*/
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Vector was sorted in" << duration.count() << " microseconds.\n";
+    std::cout << "Selection sort took " << duration.count() << " microseconds.\n";
 }
 
-void insertionSort (std::vector<unsigned int> &vec)
+std::chrono::microseconds insertionSort (std::vector<unsigned int> &vec)
 {
 
     /*Get Start Time*/
@@ -86,7 +86,7 @@ void insertionSort (std::vector<unsigned int> &vec)
 
     /*Get and Print Duration*/
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Vector was sorted in" << duration.count() << " microseconds.\n";
+    std::cout << "Insertion sort took " << duration.count() << " microseconds.\n";
 }
 
 void initVector(std::vector<unsigned int> &vec, std::string filepath)
@@ -123,34 +123,16 @@ int main()
     std::cout << std::endl;
     initVector(vec, filepath);
 
-    /*Select a Sorting Algorithm*/
-    std::cout << "1.Bubble Sort\n2.Selection Sort\n3.Insertion Sort\nPlease select a sorting algorithm: ";
-    
-    std::cin >> selection;
-    switch (selection)
-    {
+
+
     /*Bubble Sort*/
-    case 1:
-        bubbleSort(vec);
-        break;
-    
-    /*Selection Sort*/
-    case 2:
-        selectionSort(vec);
-        break;
+    std::chrono::microseconds average = std::chrono::duration_cast<std::chrono::microseconds>((bubbleSort(vec) + bubbleSort(vec) + bubbleSort(vec)) / 3);
+    std::cout << "The average is " << average << " microseconds.\n";
 
-    /*Insertion Sort*/
-    case 3:
-        insertionSort(vec);
-        break;
 
-    default:
-        std::cout << "ERROR: Invalid selection please try again!";
-        break;
-    }
-
-    size_t a;
+    std::string a;
     std::cin >> a;
+
 
     return 0;
 }

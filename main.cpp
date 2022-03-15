@@ -4,7 +4,7 @@
 #include <string>
 #include <chrono>
 
-std::chrono::microseconds bubbleSort (std::vector<unsigned int> &vec)
+std::chrono::nanoseconds bubbleSort (std::vector<unsigned int> vec)
 {
     /*Get Start Time*/
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -25,12 +25,12 @@ std::chrono::microseconds bubbleSort (std::vector<unsigned int> &vec)
     auto endTime = std::chrono::high_resolution_clock::now();
 
     /*Get and Print Duration*/
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Bubble sort took " << duration.count() << " microseconds.\n";
-
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+    std::cout << "Bubble sort took " << duration.count() << " nanoseconds.\n";
+    return duration;
 }
 
-std::chrono::microseconds selectionSort (std::vector<unsigned int> &vec)
+std::chrono::nanoseconds selectionSort (std::vector<unsigned int> vec)
 {
 
     /*Get Start Time*/
@@ -55,11 +55,12 @@ std::chrono::microseconds selectionSort (std::vector<unsigned int> &vec)
     auto endTime = std::chrono::high_resolution_clock::now();
 
     /*Get and Print Duration*/
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Selection sort took " << duration.count() << " microseconds.\n";
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+    std::cout << "Selection sort took " << duration.count() << " nanoseconds.\n";
+    return duration;
 }
 
-std::chrono::microseconds insertionSort (std::vector<unsigned int> &vec)
+std::chrono::nanoseconds insertionSort (std::vector<unsigned int> vec)
 {
 
     /*Get Start Time*/
@@ -80,13 +81,13 @@ std::chrono::microseconds insertionSort (std::vector<unsigned int> &vec)
         }
         vec[insertIndex + 1] = insert;
     }
-
     /*Get End Time*/
     auto endTime = std::chrono::high_resolution_clock::now();
 
     /*Get and Print Duration*/
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
-    std::cout << "Insertion sort took " << duration.count() << " microseconds.\n";
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+    std::cout << "Insertion sort took " << duration.count() << " nanoseconds.\n";
+    return duration;
 }
 
 void initVector(std::vector<unsigned int> &vec, std::string filepath)
@@ -126,9 +127,16 @@ int main()
 
 
     /*Bubble Sort*/
-    std::chrono::microseconds average = std::chrono::duration_cast<std::chrono::microseconds>((bubbleSort(vec) + bubbleSort(vec) + bubbleSort(vec)) / 3);
-    std::cout << "The average is " << average << " microseconds.\n";
+    std::chrono::nanoseconds average = (bubbleSort(vec) + bubbleSort(vec) + bubbleSort(vec)) / 3;
+    std::cout << "The bubble sort average is " << average.count() << " nanoseconds.\n\n";
 
+    /*Selection Sort*/
+    average = (selectionSort(vec) + selectionSort(vec) + selectionSort(vec)) / 3;
+    std::cout << "The selection sort average is " << average.count() << " nanoseconds.\n\n";
+    
+    /*Insertion Sort*/
+    average = (insertionSort(vec) + insertionSort(vec) + insertionSort(vec)) / 3;
+    std::cout << "The insertion sort average is " << average.count() << " nanoseconds.\n\n";
 
     std::string a;
     std::cin >> a;
